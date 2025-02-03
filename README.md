@@ -95,3 +95,20 @@ docker tag <image_id> <user_name>/<image_name>
 docker push <user_name>/<image_name> 
 ```
 The image will be uploaded to Docker Hub.
+
+### Pulling image from Docker Hub
+
+Once the image is pushed to Docker Hub, the image can be pulled from any machine and container can be created. 
+```
+# add the appropriate username and imagename, as used above
+docker pull <user_name>/<image_name>
+
+# in this case, the repo is as shown below
+docker pull cgshash2025/p41testimage
+```
+The image repository in Docker Hub can be found by clicking [here](https://hub.docker.com/r/cgshash2025/p41testimage)
+
+Once the image is pulled, the container can be created
+```
+docker run -p 5000:5000 cgshash2025/p41testimage
+```
