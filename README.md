@@ -69,3 +69,29 @@ docker build -t <image_name> .
 docker build -t p41testimage .
 
 ```
+The image will be build locally. The image after getting built, can be verified by: 
+
+```
+docker image ls
+```
+This will list the images built locally. Copy the ID of the image.
+
+### Pushing the image to Docker Hub
+
+The locally built image can be pushed to Docker Hub. Following are the steps: 
+1. Assuming the user has a Docker Hub created, the user needs to login first.
+```
+docker login -u <username>
+```
+Enter the username. Later, prompt for password will be asked. Enter the password and you will be logged in. 
+
+2. The image needs to be tagged accordingly. Paste the image ID in the following command.
+```
+docker tag <image_id> <user_name>/<image_name>
+```
+
+3. Push the iamge to Docker hub"
+```
+docker push <user_name>/<image_name> 
+```
+The image will be uploaded to Docker Hub.
