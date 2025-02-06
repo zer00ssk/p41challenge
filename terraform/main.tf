@@ -1,5 +1,19 @@
-/* Terraform code 
+/* Terraform code For Task 2 of Particle41 DevOps Challenge. 
+
+The resources are created Azure. AKS is created for deploying the Docker Image created in the previous task. 
+List of resources created: 
+1. Resouce Groups - one each for AKS, AKS node pool and VNET.
+2. VNET
+3. 2 Network Security Groups (NSG) - one each for Public and Private network
+4. 2 Public Subnets
+5. 2 Private Subnets
+6. AKS Cluster - Managed Cluster
+7. Kubernetes Deployment - Docker image created in the previous task along with public internet facing Load Balancing.
+
 */
+
+
+
 resource "azurerm_resource_group" "testrg" {
   name      = var.rg_name
   location  = var.location
