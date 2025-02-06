@@ -143,6 +143,39 @@ After clicking, the subscription overview page will appear.
 ![image](https://github.com/user-attachments/assets/b8dedaf2-46b4-4f97-acea-4f38b9540570)
 Copy the subscription ID. 
 
+#### Paste the details in terraform.tfvars
+
+THe details copied in the previous tasks, are to be pasted in the terraform.tfvars file, in the `terraform` directory. 
+
+```
+# paste the details in the variables specified
+azure-client-id = ""
+azure-client-secret = ""
+azure-subscription = ""
+azure-tenant = ""
+```
+### Running the Terraform deployment
+
+- Clone the git repository to the machine of your choice. 
+
+- Ensure Terraform is installed in the machine
+  ```
+  terraform -v
+  ```
+  If Terraform is not installed, follow the steps give in the [official terraform documentation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+
+- Once Terraform in ensure that it is installed in the machine, jump to the directory there terraform files exist.
+  ```
+  cd /p41challenge/terraform
+  ```
+- Run the Terraform commands to plan and apply the infrastructure.
+  ```
+  terraform plan
+
+  terraform apply
+  ```
+After deployment is completed, check the infrastructure created in the Azure resources. 
 
 
-
+Cheers, you are done!!
+Thank you!
