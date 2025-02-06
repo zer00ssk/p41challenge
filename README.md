@@ -118,17 +118,31 @@ In Task 1, Docker Image was created and pushed to Docker Hub. In this task, Infr
 
 ### Authenticating Azure Credentials 
 
-- Azure Client ID - and Client Secret 
+#### Azure Client ID, Client Secret and Tenant ID
 ![image](https://github.com/user-attachments/assets/2a34e667-0feb-42ac-9d82-a4965fd032fc)
 Go to Microsoft Entra ID
 
 ![image](https://github.com/user-attachments/assets/bc6dd993-8920-4a98-abfa-ffb529df36fc)
+First thing, the Tenant ID can be seen. Copy the same for Tenant ID.
 Once the page is opened, click on "Manage" 
 Then, click on App Registrations, under the Manage menu. 
 In the "App Registrations" page, go to "All Applications" tab, and see choose the appropriate application for Client ID. 
 
 For Client Secret, click on the Application. The application page will be opened.
 ![image](https://github.com/user-attachments/assets/2e7b8b58-19ea-43f5-982b-34042d2fb5ec)
+
+Then, click on "manage" menu, "Certificates & secrets" page. You can see the page appear. Click on "Client Secrets" tab. Below, would be a list of secret(s).
+The Client secret value will be visible. If its not visible, create a new one by clicking the "New Client Secret". After creating, the value will be visible ONLY FOR THE FIRST TIME. Ensure to COPY THE VALUE AND STORE IT SOMEWHERE SAFE for FUTURE REFERENCES.
+
+#### Azure Subscription ID 
+![image](https://github.com/user-attachments/assets/1b44cb72-4377-4533-9f50-4454a3e03043)
+Search for subscrpition in the search bar and click on Subscription. List of subscriptins will appear. Click on the appropriate subscription. 
+
+After clicking, the subscription overview page will appear.
+
+![image](https://github.com/user-attachments/assets/b8dedaf2-46b4-4f97-acea-4f38b9540570)
+Copy the subscription ID. 
+
 
 
 
