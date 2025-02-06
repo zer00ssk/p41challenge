@@ -112,3 +112,7 @@ Once the image is pulled, the container can be created
 ```
 docker run -p 5000:5000 cgshash2025/p41testimage
 ```
+# Task 2 - Terraform and Azure Cloud - Creating Infrastructure
+
+In Task 1, Docker Image was created and pushed to Docker Hub. In this task, Infrastructure in Azure will be created using Terraform for hosting the container/pods using the Docker Image created previously. 
+
