@@ -13,7 +13,7 @@ List of resources created:
 */
 
 
-
+# Resource group creation for AKS
 resource "azurerm_resource_group" "testrg" {
   name      = var.rg_name
   location  = var.location
@@ -23,6 +23,7 @@ resource "azurerm_resource_group" "testrg" {
   }
 }
 
+# Resource group creation for VNET
 resource "azurerm_resource_group" "vnet-rg" {
   name       = var.vnet-rg-name
   location   = var.location
@@ -32,6 +33,7 @@ resource "azurerm_resource_group" "vnet-rg" {
   }
 }
 
+# Resource group creation for AKS Node Pool
 // resource "azurerm_resource_group" "aks-np-rg" {
 //   name       = var.aks-np-rg-name
 //   location   = var.location
@@ -41,6 +43,8 @@ resource "azurerm_resource_group" "vnet-rg" {
 //   }
 // }
 
+
+# Creation of VNET
 resource "azurerm_virtual_network" "test-vnet" {
   name                  = var.vnet-name
   location              = azurerm_resource_group.vnet-rg.location
@@ -54,6 +58,7 @@ resource "azurerm_virtual_network" "test-vnet" {
   depends_on = [azurerm_resource_group.vnet-rg]
 }
 
+# Creation of Public Subnets. Using 'count' for creating 2 subnets
 resource "azurerm_subnet" "public-subnet" {
   count = 2
   
@@ -69,6 +74,7 @@ resource "azurerm_subnet" "public-subnet" {
   ]
 }
 
+# Creation of Private Subnets. Using 'count' for creating 2 subnets
 resource "azurerm_subnet" "private-subnet" {
   count = 2
   
@@ -84,7 +90,7 @@ resource "azurerm_subnet" "private-subnet" {
   ]
 }
 
-
+# Network Security Group for Private Subnets
 resource "azurerm_network_security_group" "test-private-nsg" {
   name                  = var.nsg-name-private
   location              = azurerm_resource_group.testrg.location
@@ -96,7 +102,7 @@ resource "azurerm_network_security_group" "test-private-nsg" {
   depends_on            = [azurerm_resource_group.vnet-rg]
 }
 
-
+# NSG rule for Deny all inbound traffic. For private subnets
 resource "azurerm_network_security_rule" "Deny-all" {
   resource_group_name         = azurerm_resource_group.vnet-rg.name
   network_security_group_name = azurerm_network_security_group.test-private-nsg.name
@@ -113,7 +119,7 @@ resource "azurerm_network_security_rule" "Deny-all" {
   depends_on = [azurerm_virtual_network.test-vnet]
 }
 
-
+# Network Security Group for Public Subnets
 resource "azurerm_network_security_group" "test-public-nsg" {
   name                  = var.nsg-name-public
   location              = azurerm_resource_group.testrg.location
@@ -125,7 +131,7 @@ resource "azurerm_network_security_group" "test-public-nsg" {
   depends_on            = [azurerm_resource_group.vnet-rg]
 }
 
-
+# NSG rule for Allowing HTTPS inbound traffic. For Public subnets
 resource "azurerm_network_security_rule" "allow-internet-https" {
   resource_group_name         = azurerm_resource_group.vnet-rg.name
   network_security_group_name = azurerm_network_security_group.test-public-nsg.name
@@ -142,6 +148,7 @@ resource "azurerm_network_security_rule" "allow-internet-https" {
   depends_on = [azurerm_virtual_network.test-vnet]
 }
 
+# NSG rule for allowing HTTP inbound traffic. For Public subnets
 resource "azurerm_network_security_rule" "allow-internet-http" {
   resource_group_name         = azurerm_resource_group.vnet-rg.name
   network_security_group_name = azurerm_network_security_group.test-public-nsg.name
@@ -158,6 +165,7 @@ resource "azurerm_network_security_rule" "allow-internet-http" {
   depends_on = [azurerm_virtual_network.test-vnet]
 }
 
+# Association of private subnets to Private NSG
 resource "azurerm_subnet_network_security_group_association" "private-subnet-associate" {
   count = 2
 
@@ -165,6 +173,7 @@ resource "azurerm_subnet_network_security_group_association" "private-subnet-ass
   network_security_group_id = azurerm_network_security_group.test-private-nsg.id
 }
 
+# Association of public subnets to Public NSG
 resource "azurerm_subnet_network_security_group_association" "public-subnet-associate" {
   count = 2
 
@@ -172,6 +181,8 @@ resource "azurerm_subnet_network_security_group_association" "public-subnet-asso
   network_security_group_id = azurerm_network_security_group.test-public-nsg.id
 }
 
+
+# Creation of AKS Cluster
 resource "azurerm_kubernetes_cluster" "tf-aks-cls" {
   name = var.aks-name
   location = azurerm_resource_group.testrg.location
@@ -201,6 +212,7 @@ resource "azurerm_kubernetes_cluster" "tf-aks-cls" {
   }
 }
 
+# Creation of Node pool
 resource "azurerm_kubernetes_cluster_node_pool" "aks-cluster-node-pool"  {
   count = 1
 
@@ -212,6 +224,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks-cluster-node-pool"  {
   max_pods = 50
 }
 
+
+# After AKS is created, deployment of the Docker image will be done by this resource block
 resource "kubernetes_deployment" "tf-aks-p41-deploy" {
   metadata {
     name = "p41-challenge-server"
@@ -249,7 +263,7 @@ resource "kubernetes_deployment" "tf-aks-p41-deploy" {
   }
 }
 
-
+# Creation of AKS service: Load balancer 
 resource "kubernetes_service" "tf-aks-p41-lb" {
   metadata {
     name = "p41-challenge-server-service"
