@@ -116,3 +116,19 @@ docker run -p 5000:5000 cgshash2025/p41testimage
 
 In Task 1, Docker Image was created and pushed to Docker Hub. In this task, Infrastructure in Azure will be created using Terraform for hosting the container/pods using the Docker Image created previously. 
 
+### Authenticating Azure Credentials 
+
+- Azure Client ID - and Client Secret 
+![image](https://github.com/user-attachments/assets/2a34e667-0feb-42ac-9d82-a4965fd032fc)
+Go to Microsoft Entra ID
+
+![image](https://github.com/user-attachments/assets/bc6dd993-8920-4a98-abfa-ffb529df36fc)
+Once the page is opened, click on "Manage" 
+Then, click on App Registrations, under the Manage menu. 
+In the "App Registrations" page, go to "All Applications" tab, and see choose the appropriate application for Client ID. 
+
+For Client Secret, click on the Application. The application page will be opened.
+![image](https://github.com/user-attachments/assets/2e7b8b58-19ea-43f5-982b-34042d2fb5ec)
+
+
+
